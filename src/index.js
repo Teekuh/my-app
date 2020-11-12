@@ -1,12 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux'
+import App from './App';
+
+const initialState = [
+  {
+    dateTime: '29.10.2020, 19:10:42',
+    author: 'Elias',
+    message: 'First post! GG'
+  },
+  {
+    dateTime: '29.10.2020, 19:14:42',
+    author: 'Elias',
+    message: 'Now in IRC style'
+  }, 
+];
+
+const messageReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD_MESSAGE': {
+      return [...state, action.payload];
+    }
+    default:
+      return state;
+  }
+};
+
+
+const store = createStore(messageReducer)
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>,
   </React.StrictMode>,
   document.getElementById('root')
 );
